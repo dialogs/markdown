@@ -3,7 +3,10 @@
  * @flow
  */
 
-const pattern = /(?:\[(.+)\]\()?((?:https?|ftp):\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&\/\/=():!,\'\'\*]*))/ig;
+import tlds from 'tlds';
+
+const domains = new Set(tlds);
+const pattern = /(?:\[(.+)\]\()?((?:(https?):\/\/)?(?:www\.)?[-а-яёa-z0-9]+\.([а-яёa-z]{2,6})(?:[-а-яёa-z0-9._~:\/\?#\[\]@!$&'()\*\+,;=%]+)?)/ig;
 
 function isPunctuation(char: string): boolean {
   return char === '.' || char === ',' || char === ':';
@@ -39,6 +42,10 @@ function getBraceDepth(text: string): number {
   return depth;
 }
 
+function normalizeUrl(url: string): string {
+  return `http://${url}`;
+}
+
 export const link = {
   name: 'link',
   strategy(text: string) {
@@ -46,9 +53,13 @@ export const link = {
 
     let matches;
     for (let matches = pattern.exec(text); matches !== null; matches = pattern.exec(text)) {
-      const name = matches[1];
+      const [, name, url, protocol, domain] = matches;
 
-      let link = matches[2];
+      if (!domains.has(domain)) {
+        continue;
+      }
+
+      let link = url;
       const braceDepth = getBraceDepth(link);
       if (braceDepth > 0) {
         if (name) {
@@ -64,25 +75,37 @@ export const link = {
       const lastLinkChar = link.charAt(link.length - 1);
 
       if (name && lastLinkChar === ')') {
+        const rawUrl = link.slice(0, link.length - 1);
+
         ranges.push({
           start,
           end: end + name.length + 3,
           replace: name,
           options: {
-            url: link.slice(0, link.length - 1)
+            url: protocol ? rawUrl : normalizeUrl(rawUrl)
           }
         });
       } else if (isPunctuation(lastLinkChar)) {
         ranges.push({
           start,
           end: end - 1,
-          replace: link.slice(0, link.length - 1)
+          replace: link.slice(0, link.length - 1),
+          ...(protocol ? {} : {
+            options: {
+              url: normalizeUrl(link.slice(0, link.length - 1)),
+            }
+          })
         });
       } else {
         ranges.push({
           start,
           end,
-          replace: link
+          replace: link,
+          ...(protocol ? {} : {
+            options: {
+              url: normalizeUrl(link),
+            }
+          })
         });
       }
     }

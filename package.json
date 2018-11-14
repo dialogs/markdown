@@ -36,6 +36,7 @@
     "jest-cli": "23.6.0"
   },
   "dependencies": {
-    "@dlghq/emoji": "2.2.0"
+    "@dlghq/emoji": "2.2.0",
+    "tlds": "1.203.1"
   }
 }

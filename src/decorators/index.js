@@ -39,11 +39,11 @@ export const email = createRegexDecorator(
 
 const decorators = [
   code,
+  email,
   link,
   bold,
   italic,
   strike,
-  email,
   mention,
   emoji,
   namedEmoji

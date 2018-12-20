@@ -1,8 +1,11 @@
 {
   "presets": [
-    ["@dlghq/dialog", {
-      "flow": true,
-      "react": false
-    }]
+    [
+      "@dlghq/babel-preset-dialog",
+      {
+        "flow": true,
+        "react": false
+      }
+    ]
   ]
 }

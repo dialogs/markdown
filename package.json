@@ -37,6 +37,7 @@
     "babel-jest": "^23.6.0",
     "flow-bin": "0.89.0",
     "jest-cli": "23.6.0",
+    "merge": "1.2.1",
     "regenerator-runtime": "^0.13.1"
   },
   "dependencies": {

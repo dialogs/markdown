@@ -6,13 +6,18 @@
 import tlds from 'tlds';
 
 const domains = new Set(tlds);
-const pattern = /(?:\[(.+)\]\()?((?:(https?):\/\/)?(?:www\.)?[-а-яёa-z0-9]+\.([а-яёa-z]{2,6})(?:[-а-яёa-z0-9._~:\/\?#\[\]@!$&'()\*\+,;=%]+)?)/ig;
+const pattern = /(?:\[(.+)\]\()?((?:(https?):\/\/)?(?:www\.)?(?:[-а-яёA-z0-9]+\.)+([а-яёA-z]{2,6})(?:[-а-яёA-z0-9._~:\/\?#\[\]@!$&'()\*\+,;=%]+)?)/gi;
 
 function isPunctuation(char: string): boolean {
   return char === '.' || char === ',' || char === ':';
 }
 
-function indexOf(text: string, char: string, startIndex: number, endIndex: number): number {
+function indexOf(
+  text: string,
+  char: string,
+  startIndex: number,
+  endIndex: number,
+): number {
   for (let i = startIndex; i <= endIndex; i++) {
     if (text.charAt(i) === char) {
       return i;
@@ -52,7 +57,11 @@ export const link = {
     const ranges = [];
 
     let matches;
-    for (let matches = pattern.exec(text); matches !== null; matches = pattern.exec(text)) {
+    for (
+      let matches = pattern.exec(text);
+      matches !== null;
+      matches = pattern.exec(text)
+    ) {
       const [, name, url, protocol, domain] = matches;
 
       if (!domains.has(domain)) {
@@ -82,34 +91,38 @@ export const link = {
           end: end + name.length + 3,
           replace: name,
           options: {
-            url: protocol ? rawUrl : normalizeUrl(rawUrl)
-          }
+            url: protocol ? rawUrl : normalizeUrl(rawUrl),
+          },
         });
       } else if (isPunctuation(lastLinkChar)) {
         ranges.push({
           start,
           end: end - 1,
           replace: link.slice(0, link.length - 1),
-          ...(protocol ? {} : {
-            options: {
-              url: normalizeUrl(link.slice(0, link.length - 1)),
-            }
-          })
+          ...(protocol
+            ? {}
+            : {
+                options: {
+                  url: normalizeUrl(link.slice(0, link.length - 1)),
+                },
+              }),
         });
       } else {
         ranges.push({
           start,
           end,
           replace: link,
-          ...(protocol ? {} : {
-            options: {
-              url: normalizeUrl(link),
-            }
-          })
+          ...(protocol
+            ? {}
+            : {
+                options: {
+                  url: normalizeUrl(link),
+                },
+              }),
         });
       }
     }
 
     return ranges;
-  }
+  },
 };

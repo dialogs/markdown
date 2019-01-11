@@ -11,8 +11,8 @@ describe('inline parsing', () => {
   it('should convert text to token list', () => {
     expect(parse('Hello, world')).toEqual([
       {
-        content: 'Hello, world'
-      }
+        content: 'Hello, world',
+      },
     ]);
   });
 
@@ -20,28 +20,25 @@ describe('inline parsing', () => {
     const test = {
       name: 'test',
       strategy() {
-        return [
-          { start: 2, end: 5 },
-          { start: 8, end: 10 }
-        ];
-      }
+        return [{ start: 2, end: 5 }, { start: 8, end: 10 }];
+      },
     };
 
     expect(parse('0123456789', [test])).toEqual([
       {
-        content: '01'
+        content: '01',
       },
       {
         content: '234',
-        highlight: 'test'
+        highlight: 'test',
       },
       {
-        content: '567'
+        content: '567',
       },
       {
         content: '89',
-        highlight: 'test'
-      }
+        highlight: 'test',
+      },
     ]);
   });
 
@@ -51,26 +48,26 @@ describe('inline parsing', () => {
       strategy() {
         return [
           { start: 2, end: 5, replace: 'hello' },
-          { start: 8, end: 10, replace: 'world' }
+          { start: 8, end: 10, replace: 'world' },
         ];
-      }
+      },
     };
 
     expect(parse('0123456789', [test])).toEqual([
       {
-        content: '01'
+        content: '01',
       },
       {
         content: 'hello',
-        highlight: 'test'
+        highlight: 'test',
       },
       {
-        content: '567'
+        content: '567',
       },
       {
         content: 'world',
-        highlight: 'test'
-      }
+        highlight: 'test',
+      },
     ]);
   });
 });

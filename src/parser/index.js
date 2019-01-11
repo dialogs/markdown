@@ -6,7 +6,4 @@
 import parse from './block';
 import parseInline from './inline';
 
-export {
-  parse,
-  parseInline
-};
+export { parse, parseInline };

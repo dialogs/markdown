@@ -26,6 +26,8 @@ export function testDecorator(decorator, cases) {
 
 const longKibanaLink = `https://kibana.com/app/kibana#/discover?_g=()&_a=(columns:!(_source),index:'logstash-*',interval:auto,query:(query_string:(analyze_wildcard:!t,query:'*')),sort:!('@timestamp',desc))`;
 const longAmazonLink = `https://dialog-ee-desktop-beta.s3.amazonaws.com/dialog-ee-messenger-mac-canary.zip`;
+const tldLongLink =
+  'https://slack.engineering/highlights-from-slacks-august-mobile-meetup-405293bdf521';
 
 describe('decorators', () => {
   testDecorator(code, [
@@ -134,6 +136,10 @@ describe('decorators', () => {
       result: [
         { start: 0, end: longAmazonLink.length, replace: longAmazonLink },
       ],
+    },
+    {
+      text: tldLongLink,
+      result: [{ start: 0, end: tldLongLink.length, replace: tldLongLink }],
     },
     {
       text: 'https://dlg.im/foo))hello',

@@ -11,10 +11,18 @@ function identity<T>(value: T): T {
 
 export type RegexReplacer = (match: string) => string;
 
-export function matchByRegex(regex: RegExp, text: string, replacer: RegexReplacer = identity): Range[] {
+export function matchByRegex(
+  regex: RegExp,
+  text: string,
+  replacer: RegexReplacer = identity,
+): Range[] {
   const ranges = [];
 
-  for (let matches = regex.exec(text); matches !== null; matches = regex.exec(text)) {
+  for (
+    let matches = regex.exec(text);
+    matches !== null;
+    matches = regex.exec(text)
+  ) {
     const full = matches[0];
 
     let start = matches.index;
@@ -32,23 +40,31 @@ export function matchByRegex(regex: RegExp, text: string, replacer: RegexReplace
     ranges.push({
       start,
       end,
-      replace: replacer(text.slice(start, end))
+      replace: replacer(text.slice(start, end)),
     });
   }
 
   return ranges;
 }
 
-export function createRegexDecorator(name: string, regex: RegExp, replacer?: RegexReplacer): Decorator {
+export function createRegexDecorator(
+  name: string,
+  regex: RegExp,
+  replacer?: RegexReplacer,
+): Decorator {
   return {
     name,
     strategy(text) {
       return matchByRegex(regex, text, replacer);
-    }
+    },
   };
 }
 
-export function matchBetweenChar(char: string, text: string, replace?: boolean): Range[] {
+export function matchBetweenChar(
+  char: string,
+  text: string,
+  replace?: boolean,
+): Range[] {
   const ranges = [];
 
   let start = 0;
@@ -61,7 +77,9 @@ export function matchBetweenChar(char: string, text: string, replace?: boolean):
         ranges.push({
           start,
           end: end + 1,
-          replace: replace ? text.slice(start + 1, end) : text.slice(start, end + 1)
+          replace: replace
+            ? text.slice(start + 1, end)
+            : text.slice(start, end + 1),
         });
         start = end + 1;
       } else {
@@ -73,11 +91,15 @@ export function matchBetweenChar(char: string, text: string, replace?: boolean):
   return ranges;
 }
 
-export function createBetweenDecorator(name: string, char: string, replace?: boolean): Decorator {
+export function createBetweenDecorator(
+  name: string,
+  char: string,
+  replace?: boolean,
+): Decorator {
   return {
     name,
     strategy(text) {
       return matchBetweenChar(char, text, replace);
-    }
+    },
   };
 }

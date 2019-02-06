@@ -12,7 +12,7 @@ import {
   cleanCodeStart,
   isCodeEnd,
   isEmptyCodeEnd,
-  cleanCodeEnd
+  cleanCodeEnd,
 } from './utils';
 import inline from './inline';
 
@@ -38,13 +38,13 @@ function process(lines: string[], decorators: Decorator[]): BlockToken[] {
           break;
         }
 
-        code.push(line)
+        code.push(line);
       }
 
       if (code.length) {
         blocks.push({
           type: 'code_block',
-          content: code.join('\n')
+          content: code.join('\n'),
         });
 
         continue;
@@ -67,14 +67,14 @@ function process(lines: string[], decorators: Decorator[]): BlockToken[] {
     if (blockquotes.length) {
       blocks.push({
         type: 'blockquote',
-        content: process(blockquotes, decorators)
+        content: process(blockquotes, decorators),
       });
     }
 
     if (i < lines.length) {
       blocks.push({
         type: 'paragraph',
-        content: inline(line, decorators)
+        content: inline(line, decorators),
       });
     }
   }
@@ -83,10 +83,7 @@ function process(lines: string[], decorators: Decorator[]): BlockToken[] {
 }
 
 function parse(text: string, decorators: Decorator[]): BlockToken[] {
-  return process(
-    text.split('\n'),
-    decorators
-  );
+  return process(text.split('\n'), decorators);
 }
 
 export default parse;

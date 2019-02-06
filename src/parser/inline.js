@@ -16,14 +16,14 @@ function process(tokens: TextToken[], decorator: Decorator): TextToken[] {
       for (const { start, end, replace, options } of ranges) {
         if (start > last) {
           result.push({
-            content: token.content.slice(last, start)
-          })
+            content: token.content.slice(last, start),
+          });
         }
 
         result.push({
           options,
           content: replace || token.content.slice(start, end),
-          highlight: decorator.name
+          highlight: decorator.name,
         });
 
         last = end;
@@ -31,7 +31,7 @@ function process(tokens: TextToken[], decorator: Decorator): TextToken[] {
 
       if (last < token.content.length) {
         result.push({
-          content: token.content.slice(last)
+          content: token.content.slice(last),
         });
       }
     } else {

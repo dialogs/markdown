@@ -17,17 +17,13 @@ function convert(ranges) {
 export const emoji = {
   name: 'emoji',
   strategy(text: string) {
-    return convert(
-      detectEmoji(text)
-    );
-  }
+    return convert(detectEmoji(text));
+  },
 };
 
 export const namedEmoji = {
   name: 'emoji',
   strategy(text: string) {
-    return convert(
-      detectNamedEmoji(text)
-    );
-  }
-}
+    return convert(detectNamedEmoji(text));
+  },
+};

@@ -7,7 +7,7 @@
     "src"
   ],
   "scripts": {
-    "pretest": "flow",
+    "pretest": "flow check",
     "test": "jest",
     "preversion": "npm test",
     "postversion": "npm publish",
@@ -32,15 +32,14 @@
   },
   "homepage": "https://github.com/dialogs/markdown#readme",
   "devDependencies": {
-    "@babel/core": "7.2.2",
-    "@dlghq/babel-preset-dialog": "4.3.1",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "23.6.0",
-    "flow-bin": "0.90.0",
-    "jest-cli": "23.6.0",
+    "@babel/core": "7.4.4",
+    "@dlghq/babel-preset-dialog": "4.3.4",
+    "babel-jest": "24.7.1",
+    "flow-bin": "0.98.0",
+    "jest-cli": "24.7.1",
     "merge": "1.2.1",
-    "prettier": "1.15.3",
-    "regenerator-runtime": "0.13.1"
+    "prettier": "1.17.0",
+    "regenerator-runtime": "0.13.2"
   },
   "dependencies": {
     "@dlghq/emoji": "2.2.0",

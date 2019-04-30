@@ -1,6 +1,6 @@
 /**
- * Copyright 2016 Dialog LLC <info@dlg.im>
- * @flow
+ * Copyright 2019 dialog LLC <info@dlg.im>
+ * @flow strict
  */
 
 import type { Decorator, Range } from '../types';
@@ -15,7 +15,7 @@ export function matchByRegex(
   regex: RegExp,
   text: string,
   replacer: RegexReplacer = identity,
-): Range[] {
+): Array<Range> {
   const ranges = [];
 
   for (
@@ -64,7 +64,7 @@ export function matchBetweenChar(
   char: string,
   text: string,
   replace?: boolean,
-): Range[] {
+): Array<Range> {
   const ranges = [];
 
   let start = 0;

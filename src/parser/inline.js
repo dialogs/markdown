@@ -1,11 +1,14 @@
-/*
- * Copyright 2016 Dialog LLC <info@dlg.im>
- * @flow
+/**
+ * Copyright 2019 dialog LLC <info@dlg.im>
+ * @flow strict
  */
 
 import type { TextToken, Range, Decorator } from '../types';
 
-function process(tokens: TextToken[], decorator: Decorator): TextToken[] {
+function process(
+  tokens: Array<TextToken>,
+  decorator: Decorator,
+): Array<TextToken> {
   const result = [];
   for (const token of tokens) {
     if (!token.highlight) {
@@ -42,7 +45,10 @@ function process(tokens: TextToken[], decorator: Decorator): TextToken[] {
   return result;
 }
 
-function parse(text: string, decorators: Decorator[] = []): TextToken[] {
+function parse(
+  text: string,
+  decorators: Array<Decorator> = [],
+): Array<TextToken> {
   let tokens = [{ content: text }];
 
   for (const decorator of decorators) {

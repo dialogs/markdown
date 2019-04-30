@@ -1,5 +1,5 @@
-/*
- * Copyright 2016 Dialog LLC <info@dlg.im>
+/**
+ * Copyright 2019 dialog LLC <info@dlg.im>
  */
 
 import {

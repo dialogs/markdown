@@ -1,6 +1,6 @@
-/*
- * Copyright 2016 Dialog LLC <info@dlg.im>
- * @flow
+/**
+ * Copyright 2019 dialog LLC <info@dlg.im>
+ * @flow strict
  */
 
 import type { BlockToken, Decorator } from '../types';
@@ -16,7 +16,10 @@ import {
 } from './utils';
 import inline from './inline';
 
-function process(lines: string[], decorators: Decorator[]): BlockToken[] {
+function process(
+  lines: Array<string>,
+  decorators: Array<Decorator>,
+): Array<BlockToken> {
   const blocks = [];
   for (let i = 0; i < lines.length; i++) {
     let line = lines[i];
@@ -82,7 +85,7 @@ function process(lines: string[], decorators: Decorator[]): BlockToken[] {
   return blocks;
 }
 
-function parse(text: string, decorators: Decorator[]): BlockToken[] {
+function parse(text: string, decorators: Array<Decorator>): Array<BlockToken> {
   return process(text.split('\n'), decorators);
 }
 

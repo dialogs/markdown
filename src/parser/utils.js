@@ -1,6 +1,6 @@
-/*
- * Copyright 2016 Dialog LLC <info@dlg.im>
- * @flow
+/**
+ * Copyright 2019 dialog LLC <info@dlg.im>
+ * @flow strict
  */
 
 export function isBlockquote(text: string): boolean {

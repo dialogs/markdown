@@ -4,6 +4,7 @@
  */
 
 import tlds from 'tlds';
+import type { Decorator } from '../types';
 
 const domains = new Set(tlds);
 const pattern = /(?:\[(.+)\]\()?((?:(https?):\/\/)?(?:www\.)?(?:[-а-яёA-z0-9]+\.)+([а-яёA-z]{2,18})(?:[-А-яёA-z0-9._~:\/\?#\[\]@!$&'()\*\+,;=%]+)?)/gi;
@@ -51,7 +52,7 @@ function normalizeUrl(url: string): string {
   return `http://${url}`;
 }
 
-export const link = {
+export const link: Decorator = {
   name: 'link',
   strategy(text: string) {
     const ranges = [];

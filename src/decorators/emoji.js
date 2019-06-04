@@ -4,24 +4,25 @@
  */
 
 import { detectEmoji, detectNamedEmoji } from '@dlghq/emoji';
+import type { Decorator, Range } from '../types';
 
-function convert(ranges) {
+function convert(ranges): Array<Range> {
   const result = [];
   for (const { start, end, emoji } of ranges) {
-    result.push({ start, end, replace: emoji.char });
+    result.push(({ start, end, replace: emoji.char }: Range));
   }
 
   return result;
 }
 
-export const emoji = {
+export const emoji: Decorator = {
   name: 'emoji',
   strategy(text: string) {
     return convert(detectEmoji(text));
   },
 };
 
-export const namedEmoji = {
+export const namedEmoji: Decorator = {
   name: 'emoji',
   strategy(text: string) {
     return convert(detectNamedEmoji(text));

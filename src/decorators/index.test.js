@@ -227,6 +227,28 @@ describe('decorators', () => {
         },
       ],
     },
+    {
+      text: 'site.com/строчные_буквы',
+      result: [
+        {
+          start: 0,
+          end: 'site.com/строчные_буквы'.length,
+          replace: 'site.com/строчные_буквы',
+          options: { url: 'http://site.com/строчные_буквы' },
+        },
+      ],
+    },
+    {
+      text: 'www.some-site.org/здесь_Заголовок',
+      result: [
+        {
+          start: 0,
+          end: 'www.some-site.org/здесь_Заголовок'.length,
+          replace: 'www.some-site.org/здесь_Заголовок',
+          options: { url: 'http://www.some-site.org/здесь_Заголовок' },
+        },
+      ],
+    },
   ]);
 
   testDecorator(mention, [

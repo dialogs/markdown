@@ -6,7 +6,7 @@
 import tlds from 'tlds';
 
 const domains = new Set(tlds);
-const pattern = /(?:\[(.+)\]\()?((?:(https?):\/\/)?(?:www\.)?(?:[-а-яёA-z0-9]+\.)+([а-яёA-z]{2,18})(?:[-а-яёA-z0-9._~:\/\?#\[\]@!$&'()\*\+,;=%]+)?)/gi;
+const pattern = /(?:\[(.+)\]\()?((?:(https?):\/\/)?(?:www\.)?(?:[-а-яёA-z0-9]+\.)+([а-яёA-z]{2,18})(?:[-А-яёA-z0-9._~:\/\?#\[\]@!$&'()\*\+,;=%]+)?)/gi;
 
 function isPunctuation(char: string): boolean {
   return char === '.' || char === ',' || char === ':';

@@ -1,8 +1,0 @@
-machine:
-  node:
-    version: 11
-
-general:
-  branches:
-    ignore:
-      - gh-pages

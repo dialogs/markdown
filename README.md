@@ -1,6 +1,7 @@
 Markdown
 ========
 [![Build Status](https://circleci.com/gh/dialogs/markdown.svg?style=shield)](https://circleci.com/gh/dialogs/markdown)
+[![codecov](https://codecov.io/gh/dialogs/markdown/branch/master/graph/badge.svg)](https://codecov.io/gh/dialogs/markdown)
 
 Markdown for dialog projects
 

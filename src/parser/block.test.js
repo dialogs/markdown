@@ -121,9 +121,9 @@ describe('block parsing', () => {
       {
         type: 'list',
         content: [
-          { type: 'paragraph', content: [{ content: 'Hello, world!' }] },
-          { type: 'paragraph', content: [{ content: 'second item' }] },
-          { type: 'paragraph', content: [{ content: 'third item' }] },
+          { content: [{ content: 'Hello, world!' }] },
+          { content: [{ content: 'second item' }] },
+          { content: [{ content: 'third item' }] },
         ],
       },
     ]);
@@ -137,11 +137,24 @@ describe('block parsing', () => {
       },
       {
         type: 'list',
-        content: [{ type: 'paragraph', content: [{ content: 'list item' }] }],
+        content: [{ content: [{ content: 'list item' }] }],
       },
       {
         type: 'paragraph',
         content: [{ content: 'text after' }],
+      },
+    ]);
+  });
+
+  it('should split text to task list items', () => {
+    test(' - before item\n - [ ] to do\n - [x] done', [
+      {
+        type: 'list',
+        content: [
+          { done: undefined, content: [{ content: 'before item' }] },
+          { done: false, content: [{ content: 'to do' }] },
+          { done: true, content: [{ content: 'done' }] },
+        ],
       },
     ]);
   });

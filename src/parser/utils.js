@@ -36,9 +36,16 @@ export function cleanCodeEnd(text: string): string {
 }
 
 export function isListItem(text: string): boolean {
-  return /^\s-\s/.test(text);
+  return /^ - /.test(text);
 }
 
-export function cleanListItem(text: string): string {
-  return text.replace(/^\s-\s/, '');
+export function parseListItem(text: string): { done?: boolean, text: string } {
+  const match = text.match(/^ - (?:\[([ xхXХ\*\+])\] +)?(.+)$/);
+  if (match) {
+    const done = match[1] ? match[1] !== ' ' : undefined;
+
+    return { done, text: match[2] };
+  }
+
+  return { text };
 }

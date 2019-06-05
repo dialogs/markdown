@@ -14,7 +14,7 @@ import {
   isEmptyCodeEnd,
   cleanCodeEnd,
   isListItem,
-  cleanListItem,
+  parseListItem,
 } from './utils';
 import inline from './inline';
 
@@ -81,7 +81,8 @@ function process(
     for (; i < lines.length; i++) {
       line = lines[i];
       if (isListItem(line)) {
-        listItems.push(cleanListItem(line));
+        const { done, text: parsedLine } = parseListItem(line);
+        listItems.push({ done, content: inline(parsedLine, decorators) });
       } else {
         break;
       }
@@ -90,7 +91,7 @@ function process(
     if (listItems.length) {
       blocks.push({
         type: 'list',
-        content: process(listItems, decorators),
+        content: listItems,
       });
     }
 

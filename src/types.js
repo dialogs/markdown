@@ -38,4 +38,9 @@ export interface BlockquoteToken {
   content: Array<BlockToken>;
 }
 
-export type BlockToken = ParagraphToken | CodeBlockToken | BlockquoteToken;
+export interface ListToken {
+  type: 'list';
+  content: Array<BlockToken>;
+}
+
+export type BlockToken = ParagraphToken | CodeBlockToken | BlockquoteToken | ListToken;

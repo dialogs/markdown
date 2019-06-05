@@ -13,6 +13,8 @@ import {
   isCodeEnd,
   isEmptyCodeEnd,
   cleanCodeEnd,
+  isListItem,
+  cleanListItem,
 } from './utils';
 import inline from './inline';
 
@@ -71,6 +73,24 @@ function process(
       blocks.push({
         type: 'blockquote',
         content: process(blockquotes, decorators),
+      });
+    }
+
+    // parse list
+    const listItems = [];
+    for (; i < lines.length; i++) {
+      line = lines[i];
+      if (isListItem(line)) {
+        listItems.push(cleanListItem(line));
+      } else {
+        break;
+      }
+    }
+
+    if (listItems.length) {
+      blocks.push({
+        type: 'list',
+        content: process(listItems, decorators),
       });
     }
 

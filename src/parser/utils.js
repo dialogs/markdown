@@ -34,3 +34,11 @@ export function isEmptyCodeEnd(text: string): boolean {
 export function cleanCodeEnd(text: string): string {
   return text.replace(/```$/, '');
 }
+
+export function isListItem(text: string): boolean {
+  return /^\s-\s/.test(text);
+}
+
+export function cleanListItem(text: string): string {
+  return text.replace(/^\s-\s/, '');
+}

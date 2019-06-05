@@ -32,13 +32,13 @@
   },
   "homepage": "https://github.com/dialogs/markdown#readme",
   "devDependencies": {
-    "@babel/core": "7.4.4",
+    "@babel/core": "7.4.5",
     "@dlghq/babel-preset-dialog": "4.3.4",
-    "babel-jest": "24.7.1",
-    "flow-bin": "0.98.0",
-    "jest-cli": "24.7.1",
+    "babel-jest": "24.8.0",
+    "flow-bin": "0.100.0",
+    "jest-cli": "24.8.0",
     "merge": "1.2.1",
-    "prettier": "1.17.0",
+    "prettier": "1.17.1",
     "regenerator-runtime": "0.13.2"
   },
   "dependencies": {

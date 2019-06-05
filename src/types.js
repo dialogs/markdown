@@ -38,4 +38,14 @@ export interface BlockquoteToken {
   content: Array<BlockToken>;
 }
 
-export type BlockToken = ParagraphToken | CodeBlockToken | BlockquoteToken;
+export interface ListItem {
+  done: boolean | void;
+  content: Array<TextToken>;
+}
+
+export interface ListToken {
+  type: 'list';
+  content: Array<ListItem>;
+}
+
+export type BlockToken = ParagraphToken | CodeBlockToken | BlockquoteToken | ListToken;

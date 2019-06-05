@@ -115,4 +115,47 @@ describe('block parsing', () => {
       },
     ]);
   });
+
+  it('should split text to list items', () => {
+    test(' - Hello, world!\n - second item\n - third item', [
+      {
+        type: 'list',
+        content: [
+          { content: [{ content: 'Hello, world!' }] },
+          { content: [{ content: 'second item' }] },
+          { content: [{ content: 'third item' }] },
+        ],
+      },
+    ]);
+  });
+
+  it('should correctly handle list between paragraphs', () => {
+    test('text before\n - list item\ntext after', [
+      {
+        type: 'paragraph',
+        content: [{ content: 'text before' }],
+      },
+      {
+        type: 'list',
+        content: [{ content: [{ content: 'list item' }] }],
+      },
+      {
+        type: 'paragraph',
+        content: [{ content: 'text after' }],
+      },
+    ]);
+  });
+
+  it('should split text to task list items', () => {
+    test(' - before item\n - [ ] to do\n - [x] done', [
+      {
+        type: 'list',
+        content: [
+          { done: undefined, content: [{ content: 'before item' }] },
+          { done: false, content: [{ content: 'to do' }] },
+          { done: true, content: [{ content: 'done' }] },
+        ],
+      },
+    ]);
+  });
 });

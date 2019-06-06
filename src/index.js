@@ -5,5 +5,6 @@
 
 import { parse, parseInline } from './parser/index';
 import decorators from './decorators/index';
+import serialize from './serialize';
 
-export { parse, decorators, parseInline };
+export { parse, decorators, parseInline, serialize };

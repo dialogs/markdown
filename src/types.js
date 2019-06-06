@@ -19,8 +19,8 @@ export interface Decorator {
 
 export interface TextToken {
   content: string;
-  highlight?: string;
-  options?: ?TokenOptions;
+  +highlight?: string;
+  +options?: ?TokenOptions;
 }
 
 export interface ParagraphToken {

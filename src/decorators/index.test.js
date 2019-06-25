@@ -264,12 +264,12 @@ describe('decorators', () => {
       ],
     },
     {
-      text: 'http://gazprom.local/адресс_по-русски, local link',
+      text: 'http://gazprom.local/адрес_по-русски, local link',
       result: [
         {
           start: 0,
           end: 37,
-          replace: 'http://gazprom.local/адресс_по-русски',
+          replace: 'http://gazprom.local/адрес_по-русски',
         }
       ],
     },

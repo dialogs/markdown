@@ -6,7 +6,6 @@
 import tlds from 'tlds';
 import type { Decorator } from '../types';
 
-const domains = new Set(tlds);
 const pattern = /(?:\[(.+)\]\()?((?:(https?):\/\/)?(?:www\.)?(?:[-а-яёA-z0-9]+\.)+([а-яёA-z]{2,18})(?:[-А-яёA-z0-9._~:\/\?#\[\]@!$&'()\*\+,;=%]+)?)/gi;
 
 function isPunctuation(char: string): boolean {
@@ -52,88 +51,104 @@ function normalizeUrl(url: string): string {
   return `http://${url}`;
 }
 
-export const link: Decorator = {
-  name: 'link',
-  strategy(text: string) {
-    const ranges = [];
+function createDomainsList(newDomains: ?Array<string>) {
+  const domainsList = new Set(tlds);
 
-    let matches;
-    for (
-      let matches = pattern.exec(text);
-      matches !== null;
-      matches = pattern.exec(text)
-    ) {
-      const [, name, url, protocol, domain] = matches;
-
-      if (!domains.has(domain)) {
-        continue;
-      }
-
-      let link = url;
-      const braceDepth = getBraceDepth(link);
-      if (braceDepth > 0) {
-        if (name) {
-          link = link.slice(0, link.length - braceDepth + 1);
-        } else {
-          link = link.slice(0, link.length - braceDepth);
-        }
-      }
-
-      const start = matches.index;
-      const end = start + link.length;
-
-      const lastLinkChar = link.charAt(link.length - 1);
-
-      if (name && lastLinkChar === ')') {
-        const rawUrl = link.slice(0, link.length - 1);
-
-        ranges.push({
-          start,
-          end: end + name.length + 3,
-          replace: name,
-          options: {
-            url: protocol ? rawUrl : normalizeUrl(rawUrl),
-          },
-        });
-      } else if (isPunctuation(lastLinkChar)) {
-        ranges.push({
-          start,
-          end: end - 1,
-          replace: link.slice(0, link.length - 1),
-          ...(protocol
-            ? {}
-            : {
-                options: {
-                  url: normalizeUrl(link.slice(0, link.length - 1)),
-                },
-              }),
-        });
-      } else {
-        ranges.push({
-          start,
-          end,
-          replace: link,
-          ...(protocol
-            ? {}
-            : {
-                options: {
-                  url: normalizeUrl(link),
-                },
-              }),
-        });
-      }
-    }
-
-    return ranges;
-  },
-};
-
-export function getExpandedLink(newDomains: Array<string>): Decorator {
   if (newDomains && newDomains.length) {
     newDomains.forEach((newDomain: string) => {
-      domains.add(newDomain);
+      domainsList.add(newDomain);
     });
   }
 
-  return link;
+  return domainsList;
+}
+
+function linkStrategy(text: string, newDomains: ?Array<string>) {
+  const ranges = [];
+  const domains = createDomainsList(newDomains);
+
+  let matches;
+  for (
+    let matches = pattern.exec(text);
+    matches !== null;
+    matches = pattern.exec(text)
+  ) {
+    const [, name, url, protocol, domain] = matches;
+
+    if (!domains.has(domain)) {
+      continue;
+    }
+
+    let link = url;
+    const braceDepth = getBraceDepth(link);
+    if (braceDepth > 0) {
+      if (name) {
+        link = link.slice(0, link.length - braceDepth + 1);
+      } else {
+        link = link.slice(0, link.length - braceDepth);
+      }
+    }
+
+    const start = matches.index;
+    const end = start + link.length;
+
+    const lastLinkChar = link.charAt(link.length - 1);
+
+    if (name && lastLinkChar === ')') {
+      const rawUrl = link.slice(0, link.length - 1);
+
+      ranges.push({
+        start,
+        end: end + name.length + 3,
+        replace: name,
+        options: {
+          url: protocol ? rawUrl : normalizeUrl(rawUrl),
+        },
+      });
+    } else if (isPunctuation(lastLinkChar)) {
+      ranges.push({
+        start,
+        end: end - 1,
+        replace: link.slice(0, link.length - 1),
+        ...(protocol
+          ? {}
+          : {
+            options: {
+              url: normalizeUrl(link.slice(0, link.length - 1)),
+            },
+          }),
+      });
+    } else {
+      ranges.push({
+        start,
+        end,
+        replace: link,
+        ...(protocol
+          ? {}
+          : {
+            options: {
+              url: normalizeUrl(link),
+            },
+          }),
+      });
+    }
+  }
+
+  return ranges;
+}
+
+export const link = {
+  name: 'link',
+  strategy(text: string) {
+    return linkStrategy(text);
+  }
+};
+
+export function getExpandedLink(newDomains: Array<string>) {
+  return {
+    name: 'link',
+    strategy(text: string) {
+      return linkStrategy(text, newDomains);
+    }
+  }
 }

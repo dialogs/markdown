@@ -12,6 +12,7 @@ import {
   mention,
   emoji,
   namedEmoji,
+  getExpandedLink,
 } from './index';
 
 export function testDecorator(decorator, cases) {
@@ -247,6 +248,29 @@ describe('decorators', () => {
           replace: 'www.some-site.org/здесь_Заголовок',
           options: { url: 'http://www.some-site.org/здесь_Заголовок' },
         },
+      ],
+    },
+  ]);
+
+  testDecorator(getExpandedLink(['local']), [
+    {
+      text: 'http://gazprom.local, local link',
+      result: [
+        {
+          start: 0,
+          end: 20,
+          replace: 'http://gazprom.local',
+        }
+      ],
+    },
+    {
+      text: 'http://gazprom.local/адресс_по-русски, local link',
+      result: [
+        {
+          start: 0,
+          end: 37,
+          replace: 'http://gazprom.local/адресс_по-русски',
+        }
       ],
     },
   ]);

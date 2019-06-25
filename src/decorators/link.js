@@ -130,7 +130,7 @@ export const link: Decorator = {
 
 export function getExpandedLink(newDomains: Array<string>): Decorator {
   if (newDomains && newDomains.length) {
-    newDomains.forEach((newDomain) => {
+    newDomains.forEach((newDomain: string) => {
       domains.add(newDomain);
     });
   }

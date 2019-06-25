@@ -140,7 +140,7 @@ function linkStrategy(text: string, newDomains: ?Array<string>) {
 export const link: Decorator = {
   name: 'link',
   strategy(text: string) {
-    return linkStrategy(text);
+    return linkStrategy(text, null);
   }
 };
 

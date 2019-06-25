@@ -268,7 +268,7 @@ describe('decorators', () => {
       result: [
         {
           start: 0,
-          end: 37,
+          end: 36,
           replace: 'http://gazprom.local/адрес_по-русски',
         }
       ],

@@ -3,7 +3,7 @@
  * @flow strict
  */
 
-import { link } from './link';
+import { link, getExpandedLink } from './link';
 import { emoji, namedEmoji } from './emoji';
 import { createRegexDecorator, createBetweenDecorator } from './utils';
 
@@ -49,6 +49,6 @@ const decorators = [
   namedEmoji,
 ];
 
-export { link, emoji, namedEmoji };
+export { link, emoji, namedEmoji, getExpandedLink };
 
 export default decorators;

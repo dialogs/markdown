@@ -127,3 +127,13 @@ export const link: Decorator = {
     return ranges;
   },
 };
+
+export function getExpandedLink(newDomains: Array<string>): Decorator {
+  if (newDomains && newDomains.length) {
+    newDomains.forEach((newDomain) => {
+      domains.add(newDomain);
+    });
+  }
+
+  return link;
+}

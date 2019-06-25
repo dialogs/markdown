@@ -137,14 +137,14 @@ function linkStrategy(text: string, newDomains: ?Array<string>) {
   return ranges;
 }
 
-export const link = {
+export const link: Decorator = {
   name: 'link',
   strategy(text: string) {
     return linkStrategy(text);
   }
 };
 
-export function getExpandedLink(newDomains: Array<string>) {
+export function getExpandedLink(newDomains: Array<string>): Decorator {
   return {
     name: 'link',
     strategy(text: string) {

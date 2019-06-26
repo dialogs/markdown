@@ -51,7 +51,7 @@ function normalizeUrl(url: string): string {
   return `http://${url}`;
 }
 
-function createDomainsList(newDomains: ?Array<string>) {
+function createDomainsList(newDomains?: Array<string>) {
   const domainsList = new Set(tlds);
 
   if (newDomains && newDomains.length) {
@@ -63,7 +63,7 @@ function createDomainsList(newDomains: ?Array<string>) {
   return domainsList;
 }
 
-function linkStrategy(text: string, newDomains: ?Array<string>) {
+function linkStrategy(text: string, newDomains?: Array<string>) {
   const ranges = [];
   const domains = createDomainsList(newDomains);
 

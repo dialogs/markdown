@@ -6,7 +6,6 @@
 import tlds from 'tlds';
 import type { Decorator } from '../types';
 
-const domains = new Set(tlds);
 const pattern = /(?:\[(.+)\]\()?((?:(https?):\/\/)?(?:www\.)?(?:[-а-яёA-z0-9]+\.)+([а-яёA-z]{2,18})(?:[-А-яёA-z0-9._~:\/\?#\[\]@!$&'()\*\+,;=%]+)?)/gi;
 
 function isPunctuation(char: string): boolean {
@@ -52,78 +51,104 @@ function normalizeUrl(url: string): string {
   return `http://${url}`;
 }
 
-export const link: Decorator = {
-  name: 'link',
-  strategy(text: string) {
-    const ranges = [];
+function createDomainsList(newDomains?: Array<string>) {
+  const domainsList = new Set(tlds);
 
-    let matches;
-    for (
-      let matches = pattern.exec(text);
-      matches !== null;
-      matches = pattern.exec(text)
-    ) {
-      const [, name, url, protocol, domain] = matches;
+  if (newDomains && newDomains.length) {
+    newDomains.forEach((newDomain: string) => {
+      domainsList.add(newDomain);
+    });
+  }
 
-      if (!domains.has(domain)) {
-        continue;
-      }
+  return domainsList;
+}
 
-      let link = url;
-      const braceDepth = getBraceDepth(link);
-      if (braceDepth > 0) {
-        if (name) {
-          link = link.slice(0, link.length - braceDepth + 1);
-        } else {
-          link = link.slice(0, link.length - braceDepth);
-        }
-      }
+function linkStrategy(text: string, newDomains?: Array<string>) {
+  const ranges = [];
+  const domains = createDomainsList(newDomains);
 
-      const start = matches.index;
-      const end = start + link.length;
+  let matches;
+  for (
+    let matches = pattern.exec(text);
+    matches !== null;
+    matches = pattern.exec(text)
+  ) {
+    const [, name, url, protocol, domain] = matches;
 
-      const lastLinkChar = link.charAt(link.length - 1);
+    if (!domains.has(domain)) {
+      continue;
+    }
 
-      if (name && lastLinkChar === ')') {
-        const rawUrl = link.slice(0, link.length - 1);
-
-        ranges.push({
-          start,
-          end: end + name.length + 3,
-          replace: name,
-          options: {
-            url: protocol ? rawUrl : normalizeUrl(rawUrl),
-          },
-        });
-      } else if (isPunctuation(lastLinkChar)) {
-        ranges.push({
-          start,
-          end: end - 1,
-          replace: link.slice(0, link.length - 1),
-          ...(protocol
-            ? {}
-            : {
-                options: {
-                  url: normalizeUrl(link.slice(0, link.length - 1)),
-                },
-              }),
-        });
+    let link = url;
+    const braceDepth = getBraceDepth(link);
+    if (braceDepth > 0) {
+      if (name) {
+        link = link.slice(0, link.length - braceDepth + 1);
       } else {
-        ranges.push({
-          start,
-          end,
-          replace: link,
-          ...(protocol
-            ? {}
-            : {
-                options: {
-                  url: normalizeUrl(link),
-                },
-              }),
-        });
+        link = link.slice(0, link.length - braceDepth);
       }
     }
 
-    return ranges;
-  },
+    const start = matches.index;
+    const end = start + link.length;
+
+    const lastLinkChar = link.charAt(link.length - 1);
+
+    if (name && lastLinkChar === ')') {
+      const rawUrl = link.slice(0, link.length - 1);
+
+      ranges.push({
+        start,
+        end: end + name.length + 3,
+        replace: name,
+        options: {
+          url: protocol ? rawUrl : normalizeUrl(rawUrl),
+        },
+      });
+    } else if (isPunctuation(lastLinkChar)) {
+      ranges.push({
+        start,
+        end: end - 1,
+        replace: link.slice(0, link.length - 1),
+        ...(protocol
+          ? {}
+          : {
+            options: {
+              url: normalizeUrl(link.slice(0, link.length - 1)),
+            },
+          }),
+      });
+    } else {
+      ranges.push({
+        start,
+        end,
+        replace: link,
+        ...(protocol
+          ? {}
+          : {
+            options: {
+              url: normalizeUrl(link),
+            },
+          }),
+      });
+    }
+  }
+
+  return ranges;
+}
+
+export const link: Decorator = {
+  name: 'link',
+  strategy(text: string) {
+    return linkStrategy(text);
+  }
 };
+
+export function getExpandedLink(newDomains: Array<string>): Decorator {
+  return {
+    name: 'link',
+    strategy(text: string) {
+      return linkStrategy(text, newDomains);
+    }
+  }
+}

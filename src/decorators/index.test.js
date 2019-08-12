@@ -123,6 +123,23 @@ describe('decorators', () => {
       ],
     },
     {
+      text: '[foo](https://foo.com) foo [foo](https://foo.com)',
+      result: [
+        {
+          start: 0,
+          end: '[foo](https://foo.com)'.length,
+          replace: 'foo',
+          options: { url: 'https://foo.com' },
+        },
+        {
+          start: '[foo](https://foo.com) foo '.length,
+          end: '[foo](https://foo.com) foo [foo](https://foo.com)'.length,
+          replace: 'foo',
+          options: { url: 'https://foo.com' },
+        },
+      ],
+    },
+    {
       text: '(test: https://dlg.im/foo(test))',
       result: [{ start: 7, end: 31, replace: 'https://dlg.im/foo(test)' }],
     },
@@ -250,6 +267,28 @@ describe('decorators', () => {
         },
       ],
     },
+    {
+      text: 'https://foo.com?bar=foo@bar.com&baz=bar',
+      result: [
+        {
+          start: 0,
+          end: 'https://foo.com?bar=foo@bar.com&baz=bar'.length,
+          replace: 'https://foo.com?bar=foo@bar.com&baz=bar',
+          options: { url: 'https://foo.com?bar=foo@bar.com&baz=bar' },
+        },
+      ],
+    },
+    {
+      text: 'https://test.org/@foo.bar/baz',
+      result: [
+        {
+          start: 0,
+          end: 'https://test.org/@foo.bar/baz'.length,
+          replace: 'https://test.org/@foo.bar/baz',
+          options: { url: 'https://test.org/@foo.bar/baz' },
+        },
+      ],
+    },
   ]);
 
   testDecorator(getExpandedLink(['local']), [
@@ -260,7 +299,7 @@ describe('decorators', () => {
           start: 0,
           end: 20,
           replace: 'http://gazprom.local',
-        }
+        },
       ],
     },
     {
@@ -270,7 +309,7 @@ describe('decorators', () => {
           start: 0,
           end: 36,
           replace: 'http://gazprom.local/адрес_по-русски',
-        }
+        },
       ],
     },
   ]);
@@ -304,7 +343,6 @@ describe('decorators', () => {
       result: [{ start: 5, end: 7, replace: '🤡' }],
     },
   ]);
-
   testDecorator(namedEmoji, [
     {
       text: 'Hello, :smile:! :+1:',

@@ -35,7 +35,7 @@
     "@babel/core": "7.4.5",
     "@dlghq/babel-preset-dialog": "4.3.4",
     "babel-jest": "24.8.0",
-    "flow-bin": "0.100.0",
+    "flow-bin": "0.106.2",
     "jest-cli": "24.8.0",
     "merge": "1.2.1",
     "prettier": "1.17.1",

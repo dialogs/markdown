@@ -7,3 +7,4 @@
 [options]
 emoji=true
 module.use_strict=true
+exact_by_default=true

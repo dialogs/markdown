@@ -3,7 +3,7 @@
  * @flow strict
  */
 
-export type TokenOptions = { [key: string]: mixed };
+export type TokenOptions = { [key: string]: mixed, ... };
 
 export interface Range {
   start: number;

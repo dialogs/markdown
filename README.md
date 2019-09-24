@@ -1,14 +1,16 @@
 Markdown
 ========
+
 [![Build Status](https://circleci.com/gh/dialogs/markdown.svg?style=shield)](https://circleci.com/gh/dialogs/markdown)
-[![codecov](https://codecov.io/gh/dialogs/markdown/branch/master/graph/badge.svg)](https://codecov.io/gh/dialogs/markdown)
+[![Build Status](https://github.com/dialogs/markdown/workflows/test/badge.svg)](https://github.com/dialogs/markdown/actions)
+[![Code Coverage](https://codecov.io/gh/dialogs/markdown/branch/master/graph/badge.svg)](https://codecov.io/gh/dialogs/markdown)
 
 Markdown for dialog projects
 
 Installation
 ------------
 
-```
+```bash
 npm install --save @dlghq/markdown
 ```
 
@@ -48,4 +50,5 @@ AST for above example would be
 
 License
 -------
+
 [Apache-2.0](LICENSE)

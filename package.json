@@ -48,7 +48,7 @@
   },
   "jest": {
     "transformIgnorePatterns": [
-      "node_modules/(?!@dlghq)"
+      "node_modules/(?!(@dlghq)|(lodash-es))"
     ]
   }
 }

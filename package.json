@@ -39,7 +39,8 @@
     "jest-cli": "24.9.0",
     "merge": "1.2.1",
     "prettier": "1.18.2",
-    "regenerator-runtime": "0.13.3"
+    "regenerator-runtime": "0.13.3",
+    "lodash-es": "4.17.15"
   },
   "dependencies": {
     "@dlghq/emoji": "2.2.0",

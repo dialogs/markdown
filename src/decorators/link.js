@@ -140,6 +140,11 @@ export const link: Decorator = {
   strategy: createLinkStrategy([]),
 };
 
+export const textLink: Decorator = {
+  name: 'textLink',
+  strategy: createLinkStrategy([]),
+};
+
 export function getExpandedLink(newDomains: Array<string>): Decorator {
   return {
     name: 'link',

@@ -87,9 +87,10 @@ function createLinkStrategy(newDomains: Array<string>) {
         const end = start + link.length;
 
         const lastLinkChar = link.charAt(link.length - 1);
+        const getRawUrl = () => link.slice(0, link.length - 1);
 
         if (name && lastLinkChar === ')') {
-          const rawUrl = link.slice(0, link.length - 1);
+          const rawUrl = getRawUrl();
 
           ranges.push({
             start,
@@ -97,18 +98,22 @@ function createLinkStrategy(newDomains: Array<string>) {
             replace: name,
             options: {
               url: protocol ? rawUrl : normalizeUrl(rawUrl),
+              raw: rawUrl,
             },
           });
         } else if (isPunctuation(lastLinkChar)) {
+          const rawUrl = getRawUrl();
+
           ranges.push({
             start,
             end: end - 1,
-            replace: link.slice(0, link.length - 1),
+            replace: rawUrl,
             ...(protocol
               ? {}
               : {
                   options: {
-                    url: normalizeUrl(link.slice(0, link.length - 1)),
+                    url: normalizeUrl(rawUrl),
+                    raw: rawUrl,
                   },
                 }),
           });
@@ -122,6 +127,7 @@ function createLinkStrategy(newDomains: Array<string>) {
               : {
                   options: {
                     url: normalizeUrl(link),
+                    raw: link,
                   },
                 }),
           });

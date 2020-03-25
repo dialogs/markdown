@@ -296,6 +296,10 @@ describe('decorators', () => {
       text: '@zs',
       result: [{ start: 0, end: 3, replace: '@zs' }],
     },
+    {
+      text: '@z',
+      result: [{ start: 0, end: 2, replace: '@z' }],
+    },
   ]);
 
   testDecorator(emoji, [

@@ -260,7 +260,7 @@ describe('decorators', () => {
           start: 0,
           end: 20,
           replace: 'http://gazprom.local',
-        }
+        },
       ],
     },
     {
@@ -270,7 +270,7 @@ describe('decorators', () => {
           start: 0,
           end: 36,
           replace: 'http://gazprom.local/адрес_по-русски',
-        }
+        },
       ],
     },
   ]);
@@ -291,6 +291,10 @@ describe('decorators', () => {
     {
       text: '@site.com',
       result: [{ start: 0, end: 9, replace: '@site.com' }],
+    },
+    {
+      text: '@zs',
+      result: [{ start: 0, end: 3, replace: '@zs' }],
     },
   ]);
 

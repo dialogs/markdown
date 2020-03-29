@@ -101,7 +101,7 @@ describe('decorators', () => {
     },
     {
       text: 'http://dialog.chat/ - test this',
-      result: [{ start: 0, end: 18, replace: 'http://dialog.chat' }],
+      result: [{ start: 0, end: 19, replace: 'http://dialog.chat/' }],
     },
     {
       text: '(test: https://dlg.im)',
@@ -109,7 +109,7 @@ describe('decorators', () => {
     },
     {
       text: '(https://dlg.im)',
-      result: [{ start: 0, end: 14, replace: 'https://dlg.im' }],
+      result: [{ start: 1, end: 15, replace: 'https://dlg.im' }],
     },
     {
       text: '(test: [Dialog](https://dlg.im))',
@@ -217,9 +217,9 @@ describe('decorators', () => {
       result: [
         {
           start: 0,
-          end: 'dlg.im'.length,
-          replace: 'dlg.im',
-          options: { url: 'http://dlg.im' },
+          end: 'dlg.im/'.length,
+          replace: 'dlg.im/',
+          options: { url: 'http://dlg.im/' },
         },
       ],
     },

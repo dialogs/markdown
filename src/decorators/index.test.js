@@ -92,6 +92,42 @@ describe('decorators', () => {
 
   testDecorator(link, [
     {
+      text:
+        'https://drive.google.com/open?id=1z2P7LcbkHHkMWVpmNa4PFqV2FfRkrFyLZ&authuser=s.schadnyh@dlg.im&usp=drive_fs',
+      result: [
+        {
+          start: 0,
+          end: 107,
+          replace:
+            'https://drive.google.com/open?id=1z2P7LcbkHHkMWVpmNa4PFqV2FfRkrFyLZ&authuser=s.schadnyh@dlg.im&usp=drive_fs',
+        },
+      ],
+    },
+    {
+      text:
+        'test it (https://drive.google.com/open?id=1z2P7LcbkHHkMWVpmNa4PFqV2FfRkrFyLZ&authuser=s.schadnyh@dlg.im&usp=drive_fs) text',
+      result: [
+        {
+          start: 9,
+          end: 116,
+          replace:
+            'https://drive.google.com/open?id=1z2P7LcbkHHkMWVpmNa4PFqV2FfRkrFyLZ&authuser=s.schadnyh@dlg.im&usp=drive_fs',
+        },
+      ],
+    },
+    {
+      text: 'https://medium.com/@jfpetersphoto',
+      result: [
+        { start: 0, end: 33, replace: 'https://medium.com/@jfpetersphoto' },
+      ],
+    },
+    {
+      text: 'sometexthttps://medium.com/@jfpetersphoto',
+      result: [
+        { start: 8, end: 41, replace: 'https://medium.com/@jfpetersphoto' },
+      ],
+    },
+    {
       text: 'http://google.com',
       result: [{ start: 0, end: 17, replace: 'http://google.com' }],
     },

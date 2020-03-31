@@ -128,6 +128,30 @@ describe('decorators', () => {
       ],
     },
     {
+      text: 'document.doc',
+      result: [],
+    },
+    {
+      text: 'document.txt',
+      result: [],
+    },
+    {
+      text: 'document.pdf',
+      result: [],
+    },
+    {
+      text: 'document.png',
+      result: [],
+    },
+    {
+      text: 'document.exe',
+      result: [],
+    },
+    {
+      text: 'document.html',
+      result: [],
+    },
+    {
       text: 'http://google.com',
       result: [{ start: 0, end: 17, replace: 'http://google.com' }],
     },

@@ -69,7 +69,7 @@ function createLinkStrategy(newDomains: Array<string>) {
       for (matches; matches !== null; matches = pattern.exec(text)) {
         const [, name, url, protocol, domain] = matches;
 
-        if (!domain && !domainsList.has(domain)) {
+        if (!domain || !domainsList.has(domain)) {
           continue;
         }
 

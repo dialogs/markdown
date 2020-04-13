@@ -287,6 +287,10 @@ describe('decorators', () => {
         },
       ],
     },
+    {
+      text: '(http://test.nonExistentDomain)',
+      result: [],
+    },
   ]);
 
   testDecorator(getExpandedLink(['local']), [

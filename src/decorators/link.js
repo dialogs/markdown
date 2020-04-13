@@ -84,7 +84,7 @@ function createLinkStrategy(newDomains: Array<string>) {
           domain = domainSimple;
         }
 
-        if (!domain && !domainsList.has(domain)) {
+        if (!domain || !domainsList.has(domain)) {
           continue;
         }
 

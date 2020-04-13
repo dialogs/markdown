@@ -33,7 +33,7 @@
   "homepage": "https://github.com/dialogs/markdown#readme",
   "devDependencies": {
     "@babel/core": "7.6.2",
-    "@babel/plugin-transform-named-capturing-groups-regex": "^7.8.3",
+    "@babel/plugin-transform-named-capturing-groups-regex": "7.8.3",
     "@dlghq/babel-preset-dialog": "4.4.0",
     "babel-jest": "24.9.0",
     "flow-bin": "0.108.0",

@@ -7,7 +7,7 @@ import tlds from 'tlds';
 import type { Decorator } from '../types';
 import memoize from 'lodash-es/memoize';
 
-const pattern = /(?:\[(.+)\]\()?((?:(https?):\/\/)?(?:www\.)?(?:[-а-яёA-z0-9]+\.)+([а-яёA-z]{2,18})(?:[-А-яёA-z0-9._~:\/\?#\[\]@!$&'()\*\+,;=%]+)?)/gi;
+const pattern = /(?:(?:\[(?<name>.+?)\])?\((?<url>(?:(?<protocol>https?):\/\/)?(?:www\.)?(?:[-а-яёA-z0-9]+?\.)+(?<domain>[а-яёA-z]{2,18})(?:[?/#][-А-яёA-z0-9._~:\/\?#\[\]@!$&'()\*\+,;=%]*)?)\))|(?:(?<urlSimple>(?:(?<protocolSimple>https?):\/\/)?(?:www\.)?(?:[-а-яёA-z0-9]+?\.)+(?<domainSimple>[а-яёA-z]{2,18})(?:[?/#][-А-яёA-z0-9._~:\/\?#\[\]@!$&'()\*\+,;=%]*)?))/gi;
 
 function isPunctuation(char: string): boolean {
   return char === '.' || char === ',' || char === ':';
@@ -67,7 +67,22 @@ function createLinkStrategy(newDomains: Array<string>) {
 
     if (matches) {
       for (matches; matches !== null; matches = pattern.exec(text)) {
-        const [, name, url, protocol, domain] = matches;
+        const { groups } = matches;
+        let {
+          name,
+          url,
+          protocol,
+          domain,
+          urlSimple,
+          protocolSimple,
+          domainSimple,
+        } = groups || {};
+
+        if (urlSimple) {
+          url = urlSimple;
+          protocol = protocolSimple;
+          domain = domainSimple;
+        }
 
         if (!domain || !domainsList.has(domain)) {
           continue;
@@ -83,20 +98,17 @@ function createLinkStrategy(newDomains: Array<string>) {
           }
         }
 
-        const start = matches.index;
+        const start = urlSimple || name ? matches.index : matches.index + 1;
         const end = start + link.length;
-
         const lastLinkChar = link.charAt(link.length - 1);
 
-        if (name && lastLinkChar === ')') {
-          const rawUrl = link.slice(0, link.length - 1);
-
+        if (name) {
           ranges.push({
             start,
-            end: end + name.length + 3,
+            end: end + name.length + (lastLinkChar === ')' ? 3 : 4),
             replace: name,
             options: {
-              url: protocol ? rawUrl : normalizeUrl(rawUrl),
+              url: protocol ? link : normalizeUrl(link),
             },
           });
         } else if (isPunctuation(lastLinkChar)) {

@@ -7,7 +7,7 @@ import tlds from 'tlds';
 import type { Decorator } from '../types';
 import memoize from 'lodash-es/memoize';
 
-const pattern = /(?:(?:\[(?<name>.+?)\])?\((?<url>(?:(?<protocol>https?):\/\/)?(?:www\.)?(?:[-а-яёA-z0-9]+?\.)+(?<domain>[а-яёA-z]{2,18})(?:[?/#][-А-яёA-z0-9._~:\/\?#\[\]@!$&'()\*\+,;=%]*)?)\))|(?:(?<urlSimple>(?:(?<protocolSimple>https?):\/\/)?(?:www\.)?(?:[-а-яёA-z0-9]+?\.)+(?<domainSimple>[а-яёA-z]{2,18})(?:[?/#][-А-яёA-z0-9._~:\/\?#\[\]@!$&'()\*\+,;=%]*)?))/gi;
+const pattern = /(?:(?:\[(.+?)\])?\(((?:(https?):\/\/)?(?:www\.)?(?:[-а-яёA-z0-9]+?\.)+([а-яёA-z]{2,18})(?:[?/#][-А-яёA-z0-9._~:\/\?#\[\]@!$&'()\*\+,;=%]*)?)\))|(?:((?:(https?):\/\/)?(?:www\.)?(?:[-а-яёA-z0-9]+?\.)+([а-яёA-z]{2,18})(?:[?/#][-А-яёA-z0-9._~:\/\?#\[\]@!$&'()\*\+,;=%]*)?))/gi;
 
 function isPunctuation(char: string): boolean {
   return char === '.' || char === ',' || char === ':';
@@ -67,8 +67,8 @@ function createLinkStrategy(newDomains: Array<string>) {
 
     if (matches) {
       for (matches; matches !== null; matches = pattern.exec(text)) {
-        const { groups } = matches;
-        let {
+        let [
+          ,
           name,
           url,
           protocol,
@@ -76,7 +76,7 @@ function createLinkStrategy(newDomains: Array<string>) {
           urlSimple,
           protocolSimple,
           domainSimple,
-        } = groups || {};
+        ] = matches;
 
         if (urlSimple) {
           url = urlSimple;

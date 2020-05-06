@@ -1,6 +1,6 @@
 {
   "name": "@dlghq/markdown",
-  "version": "1.7.7",
+  "version": "1.7.8",
   "description": "Markdown for dialog projects",
   "main": "src/index.js",
   "files": [
@@ -33,7 +33,6 @@
   "homepage": "https://github.com/dialogs/markdown#readme",
   "devDependencies": {
     "@babel/core": "7.6.2",
-    "@babel/plugin-transform-named-capturing-groups-regex": "7.8.3",
     "@dlghq/babel-preset-dialog": "4.4.0",
     "babel-jest": "24.9.0",
     "flow-bin": "0.108.0",

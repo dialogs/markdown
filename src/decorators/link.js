@@ -91,11 +91,7 @@ function createLinkStrategy(newDomains: Array<string>) {
         let link = url;
         const braceDepth = getBraceDepth(link);
         if (braceDepth > 0) {
-          if (name) {
-            link = link.slice(0, link.length - braceDepth + 1);
-          } else {
-            link = link.slice(0, link.length - braceDepth);
-          }
+          link = link.slice(0, link.length - braceDepth);
         }
 
         const start = urlSimple || name ? matches.index : matches.index + 1;

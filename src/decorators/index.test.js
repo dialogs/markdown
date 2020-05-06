@@ -351,6 +351,19 @@ describe('decorators', () => {
       text: '(http://test.nonExistentDomain)',
       result: [],
     },
+    {
+      text:
+        'https://www.figma.com/file/NFPgfTdDZxGndcYyxQ00RQ/03.-Android-–-Master?node-id=3898%3A42458',
+      result: [
+        {
+          start: 0,
+          end: 'https://www.figma.com/file/NFPgfTdDZxGndcYyxQ00RQ/03.-Android-–-Master?node-id=3898%3A42458'
+            .length,
+          replace:
+            'https://www.figma.com/file/NFPgfTdDZxGndcYyxQ00RQ/03.-Android-–-Master?node-id=3898%3A42458',
+        },
+      ],
+    },
   ]);
 
   testDecorator(getExpandedLink(['local']), [

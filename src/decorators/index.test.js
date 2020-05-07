@@ -29,6 +29,8 @@ const longKibanaLink = `https://kibana.com/app/kibana#/discover?_g=()&_a=(column
 const longAmazonLink = `https://dialog-ee-desktop-beta.s3.amazonaws.com/dialog-ee-messenger-mac-canary.zip`;
 const tldLongLink =
   'https://slack.engineering/highlights-from-slacks-august-mobile-meetup-405293bdf521';
+const longLinkWithPort =
+  'https://sandbox.dlg.im:8443/console/project/plat-01/browse/routes/[grpc-plat-01.apps.sandbox.dlg.im|http://grpc-plat-01.apps.sandbox.dlg.im/]';
 
 describe('decorators', () => {
   testDecorator(code, [
@@ -361,6 +363,16 @@ describe('decorators', () => {
             .length,
           replace:
             'https://www.figma.com/file/NFPgfTdDZxGndcYyxQ00RQ/03.-Android-–-Master?node-id=3898%3A42458',
+        },
+      ],
+    },
+    {
+      text: longLinkWithPort,
+      result: [
+        {
+          start: 0,
+          end: longLinkWithPort.length,
+          replace: longLinkWithPort,
         },
       ],
     },

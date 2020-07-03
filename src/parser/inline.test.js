@@ -3,6 +3,7 @@
  */
 
 import parse from './inline';
+import decorators from '../decorators';
 
 describe('inline parsing', () => {
   const test = (text, result) => expect(parse(text)).toEqual(result);
@@ -67,6 +68,57 @@ describe('inline parsing', () => {
       {
         content: 'world',
         highlight: 'test',
+      },
+    ]);
+  });
+
+  it('should use decorators corect', () => {
+
+    expect(parse('~test string example.com~', decorators)).toEqual([
+      {
+        content: 'test string example.com',
+        highlight: 'strike',
+        options: undefined,
+      },
+    ]);
+
+    expect(parse('~ test string example.com ~', decorators)).toEqual([
+      {
+        content: ' test string example.com ',
+        highlight: 'strike',
+        options: undefined,
+      },
+    ]);
+
+    expect(parse('*test string example.com*', decorators)).toEqual([
+      {
+        content: 'test string example.com',
+        highlight: 'bold',
+        options: undefined,
+      },
+    ]);
+
+    expect(parse('* test string example.com *', decorators)).toEqual([
+      {
+        content: ' test string example.com ',
+        highlight: 'bold',
+        options: undefined,
+      },
+    ]);
+
+    expect(parse('_test string example.com_', decorators)).toEqual([
+      {
+        content: 'test string example.com',
+        highlight: 'italic',
+        options: undefined,
+      },
+    ]);
+    
+    expect(parse('_ test string example.com _', decorators)).toEqual([
+      {
+        content: ' test string example.com ',
+        highlight: 'italic',
+        options: undefined,
       },
     ]);
   });

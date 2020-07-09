@@ -3,6 +3,7 @@
  */
 
 import parse from './block';
+import decorators from '../decorators';
 
 describe('block parsing', () => {
   const test = (text, result) => expect(parse(text)).toEqual(result);
@@ -155,6 +156,39 @@ describe('block parsing', () => {
           { done: false, content: [{ content: 'to do' }] },
           { done: true, content: [{ content: 'done' }] },
         ],
+      },
+    ]);
+  });
+
+  it('should use decorator corect', () => {
+    expect(parse('_ test string example.com _', decorators)).toEqual([
+      {
+        content: [
+          {   
+            content: " test string example.com ",
+            highlight: "italic",
+            options: undefined,
+          }
+        ],
+        type: "paragraph",
+      },
+    ]);
+
+    expect(parse('test string example.com', decorators)).toEqual([
+      {
+        content: [
+          {   
+            content: "test string ",
+          },
+          {   
+            content: "example.com",
+            highlight: "link",
+            options: {
+              "url": "http://example.com",
+            },
+          }
+        ],
+        type: "paragraph",
       },
     ]);
   });

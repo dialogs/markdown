@@ -41,10 +41,10 @@ const decorators = [
   code,
   mention,
   email,
-  link,
   bold,
   italic,
   strike,
+  link,
   emoji,
   namedEmoji,
 ];

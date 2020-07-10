@@ -37,6 +37,11 @@ export const email = createRegexDecorator(
   /(?![^\s]*[=\/])(([^\/<>()\[\]\\.,;:\s@"]+(\.[^\/<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))(?![^\s]*[=\/])/g,
 );
 
+export const conferenceLink = createRegexDecorator(
+  'conferenceLink',
+  /(\w+:\/\/call\??.+confId=[0-9a-zA-Z]+)/g
+)
+
 const decorators = [
   code,
   mention,
@@ -47,6 +52,7 @@ const decorators = [
   link,
   emoji,
   namedEmoji,
+  conferenceLink,
 ];
 
 export { link, textLink, emoji, namedEmoji, getExpandedLink };

@@ -29,7 +29,7 @@ export const strike = createRegexDecorator(
 
 export const mention = createRegexDecorator(
   'mention',
-  /(?:^|[ .,#!$%^&*;:{}=_`~()-])(@\b[^\s@()[\];:"\/\\,<>=]*\b)/gi,
+  /(?:^|[ .,#!$%^&*;:{}=_`~()-])(@[^\s@()[\],;:?!"\/\\<>=]*)/gi,
 );
 
 export const email = createRegexDecorator(

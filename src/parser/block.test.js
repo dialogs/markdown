@@ -6,8 +6,11 @@ import parse from './block';
 import decorators from '../decorators';
 
 describe('block parsing', () => {
-  const test = (text, result) => expect(parse(text)).toEqual(result);
-  const tests = (texts, result) => texts.forEach((text) => test(text, result));
+  const test = (text, result, options) =>
+    expect(parse(text, [], options)).toEqual(result);
+
+  const tests = (texts, result, options) =>
+    texts.forEach((text) => test(text, result, options));
 
   it('should split text to paragraphs', () => {
     test('Hello, world', [
@@ -71,6 +74,39 @@ describe('block parsing', () => {
           ],
         },
       ],
+      { maxParsingDepth: Infinity },
+    );
+  });
+
+  it('should split text to nested blockquotes with depth limit', () => {
+    tests(
+      [
+        '>   >>    > > >> Hello, world',
+        ' >  >> Hello, world',
+        '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Hello, world',
+      ],
+      [
+        {
+          type: 'blockquote',
+          content: [
+            {
+              type: 'blockquote',
+              content: [
+                {
+                  type: 'blockquote',
+                  content: [
+                    {
+                      type: 'paragraph',
+                      content: [{ content: 'Hello, world' }],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      { maxParsingDepth: 2 },
     );
   });
 
@@ -164,31 +200,31 @@ describe('block parsing', () => {
     expect(parse('_ test string example.com _', decorators)).toEqual([
       {
         content: [
-          {   
-            content: " test string example.com ",
-            highlight: "italic",
+          {
+            content: ' test string example.com ',
+            highlight: 'italic',
             options: undefined,
-          }
+          },
         ],
-        type: "paragraph",
+        type: 'paragraph',
       },
     ]);
 
     expect(parse('test string example.com', decorators)).toEqual([
       {
         content: [
-          {   
-            content: "test string ",
+          {
+            content: 'test string ',
           },
-          {   
-            content: "example.com",
-            highlight: "link",
+          {
+            content: 'example.com',
+            highlight: 'link',
             options: {
-              "url": "http://example.com",
+              url: 'http://example.com',
             },
-          }
+          },
         ],
-        type: "paragraph",
+        type: 'paragraph',
       },
     ]);
   });

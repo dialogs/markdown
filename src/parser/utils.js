@@ -11,6 +11,10 @@ export function cleanBlockquote(text: string): string {
   return text.replace(/^\s*>\s*/, '');
 }
 
+export function cleanBlockquotes(text: string): string {
+  return text.replace(/^[\s*>\s*]*/, '');
+}
+
 export function isCodeStart(text: string): boolean {
   return /^```/.test(text);
 }

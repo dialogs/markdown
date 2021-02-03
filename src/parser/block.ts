@@ -1,6 +1,5 @@
 /**
  * Copyright 2019 dialog LLC <info@dlg.im>
- * @flow strict
  */
 
 import type { BlockToken, Decorator } from '../types';
@@ -28,7 +27,7 @@ function process(
   decorators: Array<Decorator>,
   { maxParsingDepth }: ParsingOptions,
 ): Array<BlockToken> {
-  const blocks = [];
+  const blocks: Array<BlockToken> = [];
   const nextOptions = { maxParsingDepth: maxParsingDepth - 1 };
 
   for (let i = 0; i < lines.length; i++) {

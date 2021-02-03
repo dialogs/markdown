@@ -1,6 +1,5 @@
 /**
  * Copyright 2019 dialog LLC <info@dlg.im>
- * @flow strict
  */
 
 export function isBlockquote(text: string): boolean {
@@ -43,7 +42,7 @@ export function isListItem(text: string): boolean {
   return /^ - /.test(text);
 }
 
-export function parseListItem(text: string): { done?: boolean, text: string } {
+export function parseListItem(text: string): { done?: boolean; text: string } {
   const match = text.match(/^ - (?:\[([ xхXХ\*\+])\] +)?(.+)$/);
   if (match) {
     const done = match[1] ? match[1] !== ' ' : undefined;

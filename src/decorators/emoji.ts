@@ -4,12 +4,13 @@
  */
 
 import { detectEmoji, detectNamedEmoji } from '@dlghq/emoji';
+import type { EmojiRange} from '@dlghq/emoji';
 import type { Decorator, Range } from '../types';
 
-function convert(ranges): Array<Range> {
-  const result = [];
+function convert(ranges: Array<EmojiRange>): Array<Range> {
+  const result: Array<Range> = [];
   for (const { start, end, emoji } of ranges) {
-    result.push(({ start, end, replace: emoji.char }: Range));
+    result.push(({ start, end, replace: emoji.char }));
   }
 
   return result;

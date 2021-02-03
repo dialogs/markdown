@@ -3,8 +3,11 @@
  * @flow strict
  */
 
-import { parse, parseInline } from './parser/index';
-import decorators from './decorators';
-import serialize from './serialize';
+export * from './types';
 
-export { parse, decorators, parseInline, serialize };
+export { parse, parseInline } from './parser';
+export { default as decorators } from './decorators';
+export { default as serialize } from './serialize';
+
+// $FlowFixMe
+export * from './index.ts';

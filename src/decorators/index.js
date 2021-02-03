@@ -3,52 +3,32 @@
  * @flow strict
  */
 
-import { link, textLink, getExpandedLink } from './link';
-import { emoji, namedEmoji } from './emoji';
-import { createRegexDecorator, createBetweenDecorator } from './utils';
+import type { Decorator } from '../types';
 
-export const code = createBetweenDecorator('code', '`', true);
+export type RegexReplacer = (match: string) => string;
+declare export var code: Decorator;
+declare export var bold: Decorator;
+declare export var italic: Decorator;
+declare export var strike: Decorator;
+declare export var mention: Decorator;
+declare export var email: Decorator;
+declare export var link: Decorator;
+declare export var textLink: Decorator;
+declare export var emoji: Decorator;
+declare export var namedEmoji: Decorator;
 
-export const bold = createRegexDecorator(
-  'bold',
-  /(?:^|[ .,#!$%^&;:{}=_`~()\/-])(\*[^*]+\*)(?:$|[ .,#!$%^&;:{}=_`~()\/-])/g,
-  (match: string) => match.slice(1, match.length - 1),
-);
+declare export function getExpandedLink(Array<string>): Decorator;
+declare export function createRegexDecorator(
+  name: string,
+  regex: RegExp,
+  replacer?: RegexReplacer,
+): Decorator;
 
-export const italic = createRegexDecorator(
-  'italic',
-  /(?:^|[ .,#!$%^&*;:{}=`~()\/-])(_[^_]+_)(?:$|[ .,#!$%^&*;:{}=`~()\/-])/g,
-  (match: string) => match.slice(1, match.length - 1),
-);
+declare export function createBetweenDecorator(
+  name: string,
+  char: string,
+  replace?: boolean,
+): Decorator;
 
-export const strike = createRegexDecorator(
-  'strike',
-  /(?:^|[ .,#!$%^&*;:{}=_`()-])(~[^~]+~)(?:$|[ .,#!$%^&*;:{}=_`()-])/g,
-  (match: string) => match.slice(1, match.length - 1),
-);
-
-export const mention = createRegexDecorator(
-  'mention',
-  /(?:^|[ .,#!$%^&*;:{}=_`~()-])(@[^\s@()[\],;:?!"\/\\<>=]*)/gi,
-);
-
-export const email = createRegexDecorator(
-  'email',
-  /(?![^\s]*[=\/])(([^\/<>()\[\]\\.,;:\s@"]+(\.[^\/<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))(?![^\s]*[=\/])/g,
-);
-
-const decorators = [
-  code,
-  mention,
-  email,
-  bold,
-  italic,
-  strike,
-  link,
-  emoji,
-  namedEmoji,
-];
-
-export { link, textLink, emoji, namedEmoji, getExpandedLink };
-
-export default decorators;
+declare export var decorators: Array<Decorator>;
+declare export default typeof decorators;

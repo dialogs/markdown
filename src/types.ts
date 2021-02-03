@@ -1,9 +1,8 @@
 /**
  * Copyright 2019 dialog LLC <info@dlg.im>
- * @flow strict
  */
 
-export type TokenOptions = { [key: string]: mixed, ... };
+export type TokenOptions = { [key: string]: unknown };
 
 export interface Range {
   start: number;
@@ -19,8 +18,8 @@ export interface Decorator {
 
 export interface TextToken {
   content: string;
-  +highlight?: string;
-  +options?: ?TokenOptions;
+  highlight?: Readonly<string>;
+  options?: Readonly<TokenOptions>;
 }
 
 export interface ParagraphToken {

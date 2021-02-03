@@ -3,7 +3,18 @@
  * @flow strict
  */
 
-import parse from './block';
-import parseInline from './inline';
+import type { Decorator, BlockToken, TextToken } from '../types';
 
-export { parse, parseInline };
+export type ParsingOptions = {
+  maxParsingDepth: number,
+};
+declare export function parse(
+  text: string,
+  decorators: Array<Decorator>,
+  options: ParsingOptions,
+): Array<BlockToken>;
+
+declare export function parseInline(
+  text: string,
+  decorators: Array<Decorator>,
+): Array<TextToken>;

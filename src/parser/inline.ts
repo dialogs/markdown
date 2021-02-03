@@ -1,6 +1,5 @@
 /**
  * Copyright 2019 dialog LLC <info@dlg.im>
- * @flow strict
  */
 
 import type { TextToken, Range, Decorator } from '../types';

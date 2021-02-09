@@ -376,6 +376,16 @@ describe('decorators', () => {
         },
       ],
     },
+    {
+      text: 'https://ru.wikipedia.org/wiki/Феномен_Баадера_—_Майнхоф',
+      result: [
+        {
+          start: 0,
+          end: 'https://ru.wikipedia.org/wiki/Феномен_Баадера_—_Майнхоф'.length,
+          replace: 'https://ru.wikipedia.org/wiki/Феномен_Баадера_—_Майнхоф',
+        },
+      ],
+    },
   ]);
 
   testDecorator(getExpandedLink(['local']), [
